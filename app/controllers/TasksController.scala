@@ -16,7 +16,7 @@ case class Task(id: Int, content: String)
   * application's home page.
   */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) with Circe {
+class TasksController @Inject()(cc: ControllerComponents) extends AbstractController(cc) with Circe {
   implicit val session = AutoSession
 
   /**

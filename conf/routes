@@ -3,17 +3,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# An example controller showing a sample home page
-GET           /tasks               controllers.HomeController.index
-POST          /tasks               controllers.HomeController.store
-PUT           /tasks/:id           controllers.HomeController.update(id: Long)
-DELETE        /tasks/:id           controllers.HomeController.destroy(id: Long)
-# An example controller showing how to use dependency injection
-GET           /count               controllers.CountController.count
-# An example controller showing how to write asynchronous code
-GET           /message             controllers.AsyncController.message
-
-# Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
-
-      
+# An example controller showing a sample Tasks page
+GET           /tasks            controllers.TasksController.index
+POST          /tasks            controllers.TasksController.store
+PUT           /tasks/:id        controllers.TasksController.update(id: Long)
+DELETE        /tasks/:id        controllers.TasksController.destroy(id: Long)
