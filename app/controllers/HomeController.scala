@@ -48,11 +48,27 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(req.body.asJson)
   }
 
-  def update = Action(circe.tolerantJson[CreateTask]) { req =>
+  def update(id: Long) = Action(circe.tolerantJson[CreateTask]) { req =>
     val content = req.body.content
 
-    sql"update tasks (content) values ($content)".update.apply
+    sql"update tasks (content) values ($content) where id = $id".update.apply
 
-    Ok(req.body.asJson)
+    val task: Option[Task] = sql"select * from tasks where id = $id".toMap.single.apply.map { task =>
+      Task(
+        task.get("id") match {
+          case Some(a) => a.toString.toInt
+        },
+        task.get("content") match {
+          case Some(a) => a.toString
+        }
+      )
+    }
+
+    Ok(task.asJson)
+  }
+
+  def destroy(id: Long) = Action {
+    sql"delete from tasks where id = $id".update.apply
+    Ok(Map[String, String]("message" -> "Deleted.").asJson)
   }
 }
